@@ -1,0 +1,9 @@
+{% load filters %}
+
+<a class="glyphicon glyphicon-chevron-up
+	{% if el|user_has_voted:user == 1 %} text-success {%else%} text-muted {% endif %}" href="{% url 'upvote' pk=el.pk%}"></a>
+
+<span class="label label-primary">{{ el.get_score }}</span>
+
+<a class="glyphicon glyphicon-chevron-down
+	{% if el|user_has_voted:user == -1 %} text-success {%else%} text-muted {% endif %}"  href="{% url 'downvote' pk=el.pk%}"></a>

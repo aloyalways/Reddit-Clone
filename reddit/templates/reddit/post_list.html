@@ -1,0 +1,35 @@
+{% extends 'reddit/base.html' %}
+
+{% block content %}
+
+    <form class="form-inline search-form" method="GET">
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Search!</button>
+    </form>
+
+    <div class="post-list">
+        {% for post in posts %}
+            <div class="post">
+                <h2>
+                    <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+                    {% if post.url %}
+                        <span class="url"><a href="{{post.url}}">{{post.url}}</a>
+                    {% endif %}
+                </h2>
+                <div class="date">
+                    {{ post.date_created }}
+                    {% include "reddit/subs_posted.html" with post=post %}
+                </div>
+                {% if post.url %}
+                    <a href="{{post.url}}">{{post.url}}</a>
+                {% endif %}
+                <p>{{ post.text|linebreaksbr }}</p>
+
+                {% if  post.comment_count > 0 %}
+                    <p><a href="{% url 'post_detail' pk=post.pk %}">{{ post.comment_count }} Comments</a></p>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

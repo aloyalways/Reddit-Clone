@@ -1,0 +1,13 @@
+{% block content %}
+    {% for comment in comments %}
+        <div class="comment">
+            <div class="date"> <strong>{{ comment.author }}</strong> on {{ comment.date_created }}</div>
+            {% include "reddit/vote.html" with el=comment %}
+            <p>{{ comment.text|linebreaks }}</p>
+            <a href="{% url 'add_reply_to_comment' pk=post.pk parent_pk=comment.pk %}">Add Reply</a>
+             {% if comment.children.count > 0 %}
+                {% include "reddit/comment.html" with comments=comment.children.all %}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

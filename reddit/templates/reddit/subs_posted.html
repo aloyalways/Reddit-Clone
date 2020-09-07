@@ -1,0 +1,6 @@
+{%if post.subreddits.count %}
+    <span>Posted in</span>
+    {% for sub in post.subreddits.all %}
+        <a href="{% url 'sub_detail' pk=sub.pk %}">{{ sub.name }}</a>
+    {% endfor %}
+{%endif%}
